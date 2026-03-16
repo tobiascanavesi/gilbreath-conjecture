@@ -685,11 +685,11 @@ def section_7_proposition_5():
     Hence Pr(Y=1) = (1/2)(1 - ∏ᵢ₌₁^m(1-2pᵢ)).  □
 
     COROLLARY: If all pᵢ = 1/2 + ε with |ε| < 1/2, then:
-    Pr(Y=1) = (1/2)(1 - (1-2ε)^m · ∏ correction terms)
+    1-2pᵢ = 1-2(1/2+ε) = -2ε, so ∏(1-2pᵢ) = (-2ε)^m.
 
-    For identical bias: |Pr(Y=1) - 1/2| = (1/2)|1-2ε|^m.
+    For identical bias: |Pr(Y=1) - 1/2| = (1/2)(2|ε|)^m.
 
-    Since |1-2ε| < 1 for any ε ≠ 0, this converges to 0
+    Since 2|ε| < 1 for any |ε| < 1/2, this converges to 0
     EXPONENTIALLY fast in m.
     ───────────────────────────────────────────────────────────
     """
@@ -717,11 +717,11 @@ PROOF (by induction on m).
   Hence: Pr(Y=1) = (1/2)(1 - ∏_{i=1}^m(1-2pᵢ)).  □
 
 COROLLARY 5.1: If pᵢ = 1/2 + ε for all i, then:
-  |Pr(Y=1) - 1/2| = (1/2)|1-2ε|^m → 0 exponentially.
+  1-2pᵢ = -2ε, so |Pr(Y=1) - 1/2| = (1/2)(2|ε|)^m → 0 exponentially.
 
-  For ε = 0.07 (our measured bias): |1-2·0.07| = 0.86
-  After m=30 XORs: residual bias = 0.5 · 0.86^30 ≈ 0.0054
-  After m=100 XORs: residual bias = 0.5 · 0.86^100 ≈ 1.4 × 10⁻⁷
+  For ε = 0.07 (our measured bias): 2|ε| = 0.14
+  After m=5 XORs: residual bias = 0.5 · 0.14^5 ≈ 2.7 × 10⁻⁵
+  After m=30 XORs: residual bias = 0.5 · 0.14^30 ≈ 3.3 × 10⁻²⁶
 """)
 
     # COMPUTATIONAL VERIFICATION via simulation
