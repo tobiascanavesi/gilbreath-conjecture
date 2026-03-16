@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+*.egg-info/
+.env
+.venv/
+*.log
+paper.aux
+paper.out
+paper.toc
+paper.log
+paper.synctex.gz
+paper.bbl
+paper.blg
