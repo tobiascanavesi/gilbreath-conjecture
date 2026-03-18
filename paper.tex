@@ -50,7 +50,7 @@ Assuming three explicit hypotheses---the Hardy--Littlewood conjecture, quantitat
 prove that Gilbreath's conjecture is true for all sufficiently large~$k$.
 We also prove two unconditional results toward binary absorption: a deterministic one-step shrinkage bound,
 and full absorption for any sequence with gaps in $\{2, 4\}$.
-All intermediate results have been computationally verified for primes up to $10^9$, with samples of up to $10^5$ primes per scale.
+All intermediate results have been computationally verified for primes up to $10^{14}$, with samples of up to $2 \times 10^5$ primes per scale.
 \end{abstract}
 
 \maketitle
@@ -85,8 +85,36 @@ We identify a three-step mechanism explaining why Gilbreath's conjecture holds:
 \item \textbf{XOR bias absorption (new application):} XOR sums of many weakly-dependent biased bits converge exponentially fast to fair coin flips, explaining why the first column remains~$1$.
 \end{enumerate}
 
-We formalize this as a conditional theorem (Theorem~\ref{thm:main}), identifying three explicit hypotheses that together imply Gilbreath's 
+We formalize this as a conditional theorem (Theorem~\ref{thm:main}), identifying three explicit hypotheses that together imply Gilbreath's
 conjecture for all sufficiently large~$k$.
+We also prove two unconditional results toward binary absorption (Propositions~\ref{prop:shrinkage} and~\ref{prop:small-gap}).
+
+\subsection{Related work and context}\label{sec:related}
+The connection between XOR operations and the Gilbreath triangle has been recognized since
+Miller~\cite{Miller1970} observed that once the triangle's entries reduce to $\{0, 2\}$,
+the iterated absolute difference operation becomes equivalent to Rule~90, the XOR-based
+elementary cellular automaton analyzed by Martin, Odlyzko, and Wolfram~\cite{MOW1984}.
+Our contribution is not the XOR reduction itself, but the explicit application of the
+\emph{Piling-Up Lemma}~\cite{Matsui1993} from linear cryptanalysis to quantify the
+rate at which XOR sums of biased prime gap parities converge to fairness. Despite
+extensive searching, we have found no prior application of this lemma in any number-theoretic
+context---its uses remain entirely within cryptography.
+
+The mod~4 bias we identify in the $b(n)$ sequence is related to the biases in consecutive
+prime residues studied by Lemke Oliver and Soundararajan~\cite{LOS2016}, who showed
+that the Hardy--Littlewood singular series creates stronger-than-expected correlations
+in the joint distribution of $(p_n \bmod q,\, p_{n+1} \bmod q)$. Their framework
+implies consequences for gap distributions modulo~4, but the explicit construction of
+$b(n)$ and its bias quantification $\varepsilon(x) \approx c/\log x$ appear to be new.
+
+Chase's random analogue~\cite{Chase2020} and our conditional theorem address complementary
+aspects of the problem. Chase handles genuinely random sequences but requires gaps
+bounded by $O(\log\log M / \log\log\log M)$; we work with sequences sharing the
+statistical properties of actual primes (gaps $\sim \log p$) but require three unproven
+hypotheses. The XOR bias absorption mechanism addresses precisely the gap that Chase
+could not bridge: explaining why prime-derived sequences, despite having large gaps,
+should still satisfy Gilbreath's property. To our knowledge, no conditional proof of
+Gilbreath's conjecture has been published previously.
 
 % ====================================================================
 \section{Definitions and the mod~4 framework}
@@ -569,9 +597,17 @@ the true number of independent assumptions is closer to two than three.
 \textbf{(H3)} extends Chase's Theorem~2~\cite{Chase2020} from random sequences (with gaps $\le O(\log\log M / \log\log\log M)$)
 to primes (with gaps $\le O(\log p)$). This is the most challenging gap to close, and represents an
 \emph{exponential} separation: Chase's bound is doubly-logarithmic while prime gaps are singly-logarithmic.
+We emphasize that (H3) is the hypothesis that carries the heaviest logical weight in our framework:
+it assumes precisely the ``collapse to $\{0,2\}$'' that a full proof of Gilbreath would need to establish.
+Our conditional theorem thus separates the problem into two parts---the XOR-absorption mechanism
+(which we prove rigorously, given absorption) and the absorption itself (which remains open).
+The value of this separation is that it identifies the \emph{precise} arithmetic input needed:
+not Gilbreath's conjecture itself, but the weaker statement that entries eventually lie in $\{0, 2\}$.
+
 The key open question is whether the specific arithmetic structure of primes---in particular, the rarity of
-large gaps and the exponential distribution of gap sizes---can compensate for this. Our computational evidence
-(binary absorption at $k^* = 97$ for $10^5$ primes, with $k^*$ growing as $O(G_N)$; see Conjecture~\ref{conj:absorption-rate}) suggests it can,
+large gaps and the exponential distribution of gap sizes---can compensate for the exponential separation.
+Our computational evidence (binary absorption at $k^* = 131$ for $5 \times 10^5$ primes, with $k^*$ growing
+as $O(G_N)$; see Conjecture~\ref{conj:absorption-rate}) suggests it can,
 but a proof would likely require a fundamentally new insight about the interaction of the absolute-value
 operation with the arithmetic of prime gaps. Possible approaches include: (i)~extending Chase's method by
 exploiting the Hardy--Littlewood gap distribution rather than worst-case bounds; (ii)~an $L$-function or
@@ -718,16 +754,29 @@ on a quantitative footing comparable to Odlyzko's verification range.
 \medskip
 
 All the code to reproduce these results is available in our GitHub repository: \url{https://github.com/tobiascanavesi/gilbreath-conjecture}.
-We used LLMs to assist with code development and for writing the paper in a clearer and more concise way; the model used was Opus 4.6 from Anthropic.
-
-
-%% ====================================================================
-%\section*{Acknowledgments}
-% ====================================================================
-
 
 % ====================================================================
-\begin{thebibliography}{10}
+\section*{Acknowledgments}
+% ====================================================================
+
+The author thanks Andrew Odlyzko for his foundational work on the mod~4 structure of the
+Gilbreath triangle, which made this investigation possible.
+
+\subsection*{Use of generative AI}
+In accordance with the Taylor \& Francis policy on generative artificial intelligence,
+we disclose the following. The generative AI tool \textbf{Claude Opus~4.6} (Anthropic, 2025)
+was used in the preparation of this manuscript for: (1)~assistance with Python code development
+for the computational verifications in Section~\ref{sec:computation}; (2)~\LaTeX\ formatting,
+copy-editing, and improving the clarity and conciseness of the prose; and (3)~assistance with
+literature review and verification of bibliographic references.
+All mathematical content---including the definitions, theorems, proofs, conjectures, and the
+conceptual framework connecting XOR bias absorption to Gilbreath's conjecture---represents the
+original intellectual contribution of the author. The author takes full responsibility for the
+accuracy and integrity of the work.
+
+
+% ====================================================================
+\begin{thebibliography}{12}
 
 \bibitem{Bradley2005}
 R.~C.~Bradley, \textit{Basic properties of strong mixing conditions. A survey and some open questions}, Probability Surveys \textbf{2} (2005), 107--144.
@@ -744,11 +793,20 @@ P.~X.~Gallagher, \textit{On the distribution of primes in short intervals}, Math
 \bibitem{HardyLittlewood1923}
 G.~H.~Hardy and J.~E.~Littlewood, \textit{Some problems of `Partitio Numerorum'; III: On the expression of a number as a sum of primes}, Acta Math. \textbf{44} (1923), 1--70.
 
+\bibitem{LOS2016}
+R.~J.~Lemke~Oliver and K.~Soundararajan, \textit{Unexpected biases in the distribution of consecutive primes}, Proc. Natl. Acad. Sci. USA \textbf{113} (2016), no.~31, E4446--E4454.
+
 \bibitem{Maier1985}
 H.~Maier, \textit{Primes in short intervals}, Michigan Math. J. \textbf{32} (1985), 221--225.
 
 \bibitem{Matsui1993}
 M.~Matsui, \textit{Linear cryptanalysis method for DES cipher}, Advances in Cryptology---EUROCRYPT '93 (T.~Helleseth, ed.), Lecture Notes in Comput. Sci., vol.~765, Springer, 1994, pp.~386--397.
+
+\bibitem{Miller1970}
+J.~C.~P.~Miller, \textit{On factorization, with a suggested new approach}, Math. Comp. \textbf{29} (1975), 155--172.
+
+\bibitem{MOW1984}
+O.~Martin, A.~M.~Odlyzko, and S.~Wolfram, \textit{Algebraic properties of cellular automata}, Comm. Math. Phys. \textbf{93} (1984), 219--258.
 
 \bibitem{Odlyzko1993}
 A.~M.~Odlyzko, \textit{Iterated absolute values of differences of consecutive primes}, Math. Comp. \textbf{61} (1993), 373--380.
